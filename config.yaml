@@ -1,7 +1,10 @@
-api:
-  url: ""
-  token: 5895e339f6487c26f9da013725e1499164213f72608dc613
-  auth: pat
+kadi:
+  main_url: https://kadi4mat.greenbattnutzung.iwf.ing.tu-bs.de/
+  records_url: api/records
+  token_hash: 3b911948c5e481b5d4344d692af2e6c98ce80201d284107e
+  token_name: bald_pull
+  token_expire: 21-12-2021
+  token_auth: pat
 
 data:
   xlsx_path: ./example_data/BALd-SAMSUNG-35E-671_5..xlsx
