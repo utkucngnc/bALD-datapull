@@ -42,8 +42,10 @@ class KadiInstance():
         response = self.manager.make_request(endpoint=endpoint, method="get")
         items = response.json()['items']
         for _,item in enumerate(tqdm(items)):
-            download_url = item['_links']['download']
-            df = get_file_as_dataframe(self.manager,download_url)
+            save_json('response.json',item)
+            df = get_file_as_dataframe(self.manager,item)
+            
+            break
             save_excel('./data/',item['name'],df) if save else None
 
 
@@ -53,5 +55,6 @@ if __name__ == '__main__':
     token = cfg.kadi.token_hash
     host = cfg.kadi.main_url
     k.login(host,token)
-    k.getRecordsByTag(1704)
+    k.getRecordsByTag(1915, save = False)
+    #k.getRecordsByTag(1915, save = False)
     #print(k.userDetails())
