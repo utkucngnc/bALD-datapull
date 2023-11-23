@@ -1,7 +1,7 @@
 from kadi_apy import KadiManager
-from tqdm import tqdm
 
 from utils import *
+from battery import Battery
 
 class KadiInstance():
     def __init__(self):
@@ -43,9 +43,16 @@ class KadiInstance():
             if items == []:
                 print('No items found')
             else:
-                for _,item in enumerate(tqdm(items)):
+                batteries = []
+                for i,item in enumerate(items):
+                    print('\nFile found: ' + item['name'])
+                    print('Downloading file...')
                     df = get_file_as_dataframe(self.manager,item)
                     save_dataframe(self.cfg,item,df) if save_items else None
-                    break
+                    batteries.append(Battery(df))
+                    if i == 0:
+                        break
+                
+                return batteries
         else:
             raise Exception('No user details found, please login first')

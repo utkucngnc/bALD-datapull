@@ -14,4 +14,6 @@ print('Save folder initialized, initializing Kadi instance...')
 k = KI()
 k.login(cfg)
 
-k.getRecordsByTag(1948, save_response=True, save_items=True)
+batteries = k.getRecordsByTag(1704, save_response=True, save_items=False)
+
+print('Done')
