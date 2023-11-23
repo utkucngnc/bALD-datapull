@@ -7,5 +7,4 @@ kadi:
   token_auth: pat
 
 data:
-  xlsx_path: ./example_data/BALd-SAMSUNG-35E-671_5..xlsx
-  txt_path: ./example_data/LiFun002_T35_C40dch.txt
+  save_path: ./data

@@ -1,4 +1,4 @@
 add logger
 add documentation
 update utils
-add regex for parsing
+#add regex for parsing
