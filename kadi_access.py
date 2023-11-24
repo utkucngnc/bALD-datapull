@@ -49,7 +49,7 @@ class KadiInstance():
                     print('Downloading file...')
                     df = get_file_as_dataframe(self.manager,item)
                     save_dataframe(self.cfg,item,df) if save_items else None
-                    batteries.append(Battery(df))
+                    batteries.append(Battery(df,item['name']))
                     if i == 0:
                         break
                 

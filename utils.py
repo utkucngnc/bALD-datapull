@@ -100,3 +100,7 @@ def save_dataframe(cfg, item, data: pd.DataFrame, dtype = None):
                 data.to_csv(file_path, index=False, header=False, sep='\t', mode='a')
     except:
         raise Exception('Error while saving data file')
+
+def time_to_seconds(time_str: str) -> int:
+    h, m, s = time_str.split(':')
+    return int(h) * 3600 + int(m) * 60 + int(s)

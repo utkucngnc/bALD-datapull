@@ -8,3 +8,4 @@ kadi:
 
 data:
   save_path: ./data
+  plot_path: ./plots/
