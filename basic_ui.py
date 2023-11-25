@@ -64,13 +64,10 @@ class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
         self.button_list = []
 
     def add_item(self, item):
-        label = customtkinter.CTkLabel(self, text=item, compound="left", padx=5, anchor="w")
-        button = customtkinter.CTkButton(self, text='Click', width=100, height=24)
+        button = customtkinter.CTkButton(self, text=item, width=100, height=24)
         if self.command is not None:
             button.configure(command=lambda: self.command(item))
-        label.grid(row=len(self.label_list), column=0, pady=(0, 10), sticky="w")
-        button.grid(row=len(self.button_list), column=1, pady=(0, 10), padx=5)
-        self.label_list.append(label)
+        button.grid(row=len(self.button_list), column=1, pady=(0, 10), padx=15)
         self.button_list.append(button)
 
     def remove_item(self, item):
@@ -84,6 +81,26 @@ class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
 
 
 class App(customtkinter.CTk):
+    """
+    This class represents the main application window for Kadi Battery Analysis.
+
+    Args:
+        data (list): List of battery objects.
+        cfg (object): Configuration object.
+
+    Attributes:
+        data (list): List of battery objects.
+        battery_names (list): List of battery names.
+        figure_save_path (str): Path to save the figures.
+        current_obj (object): Currently selected battery object.
+        button_config (list): List of button configurations.
+
+    Methods:
+        checkbox_frame_event: Event handler for checkbox frame modification.
+        radiobutton_frame_event: Event handler for radiobutton frame modification.
+        label_button_frame_event: Event handler for label and button frame events.
+    """
+
     def __init__(self, data, cfg):
         super().__init__()
         self.data = data
@@ -93,7 +110,7 @@ class App(customtkinter.CTk):
 
         self.title("Kadi Battery Analysis")
         self.grid_rowconfigure(0, weight=1)
-        self.columnconfigure(3, weight=1)
+        self.columnconfigure(4, weight=1)
         self.button_config = ['Plot', 'Plot & Save', 'Export Data']
 
         # create scrollable radiobutton frame for battery selection
@@ -105,14 +122,22 @@ class App(customtkinter.CTk):
         
         # create scrollable label and button frame
         self.scrollable_label_button_frame = ScrollableLabelButtonFrame(master=self, width=300, command=self.label_button_frame_event, corner_radius=0)
-        self.scrollable_label_button_frame.grid(row=0, column=2, padx=15, pady=15, sticky="nsew")
+        self.scrollable_label_button_frame.grid(row=0, column=3, padx=15, pady=15, sticky="nsew")
         for i in self.button_config:  # add items with images
             self.scrollable_label_button_frame.add_item(i)
 
     def checkbox_frame_event(self):
+        """
+        Event handler for checkbox frame modification.
+        Prints the checked items in the checkbox frame.
+        """
         print(f"checkbox frame modified: {self.scrollable_checkbox_frame.get_checked_items()}")
 
     def radiobutton_frame_event(self):
+        """
+        Event handler for radiobutton frame modification.
+        Updates the current_obj and step_ids attributes based on the selected measurement.
+        """
         self.current_obj = self.data[self.battery_names.index(self.scrollable_radiobutton_frame.get_checked_item())]
         self.step_ids = self.current_obj.step_ids
         self.columns = self.current_obj.columns
@@ -131,6 +156,13 @@ class App(customtkinter.CTk):
         self.scrollable_checkbox_frame.grid(row=0, column=2, padx=15, pady=15, sticky="ns")
 
     def label_button_frame_event(self, item):
+        """
+        Event handler for label and button frame events.
+        Prints the current step and performs actions based on the selected item and checked columns.
+        
+        Args:
+            item (str): Selected item from the label and button frame.
+        """
         current_step = int(self.scrollable_radiobutton_frame2.get_checked_item())
         if current_step is None:
             print('Please select a step')

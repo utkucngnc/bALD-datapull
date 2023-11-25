@@ -63,6 +63,19 @@ def read_response_txt(response):
     return df
 
 def get_file_as_dataframe(manager, item):
+    """
+    Downloads a file from KadiManager and returns it as a pandas DataFrame.
+
+    Args:
+        manager (KadiManager): The KadiManager instance used to make the request.
+        item (dict): The item containing the file information.
+
+    Returns:
+        pandas.DataFrame: The downloaded file as a pandas DataFrame.
+
+    Raises:
+        Exception: If there is an error while downloading the file or if the file type is not supported.
+    """
     try:
         download_url = item['_links']['download']
         response = manager.make_request(endpoint=download_url, method="get")
